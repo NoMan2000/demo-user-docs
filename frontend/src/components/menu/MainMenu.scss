@@ -1,0 +1,15 @@
+.main-menu {
+    display: flex;
+    flex: 1;
+    align-content: space-around;
+
+    .col {
+        flex: 1;
+        margin-left: 2%;
+    }
+    .side-menu {
+        max-width: 300px;
+        margin-right: 10px;
+        width: 100%;
+    }
+}

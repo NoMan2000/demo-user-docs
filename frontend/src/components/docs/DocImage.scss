@@ -1,0 +1,24 @@
+.doc-image {
+
+    .img-responsive {
+        width: 100%;
+    }
+    figcaption {
+        text-align: left;
+        display: block;
+        width: 100%;
+        line-break: anywhere;
+    }
+
+
+ }
+ .image-container {
+    &:hover {
+        cursor: pointer;
+    }
+    max-width: 400px;
+}
+.responsive-dialog {
+    width:90%;
+    height: 90%;
+}

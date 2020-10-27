@@ -1,0 +1,13 @@
+.login {
+    & legend {
+        font-size: 2rem;
+        padding: 20px 0;
+    }
+    & label {
+        font-weight: bold;
+    }
+    width: 500px;
+    margin: 0 auto;
+    // margin-left: 30vw;
+    // width: 100%;
+}

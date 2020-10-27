@@ -1,0 +1,17 @@
+.edit-tab {
+    max-width: 850px;
+    textarea, input {
+        width: 100%;
+    }
+    .bp3-form-group input {
+        max-width: 100%;
+    }
+    .bp3-file-input {
+        display: inline-block;
+        width: 100%;
+    }
+    textarea {
+        min-height: 200px;
+        height: 100%;
+    }
+}
