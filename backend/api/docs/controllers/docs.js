@@ -14,19 +14,26 @@ module.exports = {
     if (ctx.is('multipart')) {
         const { data, files } = parseMultipartData(ctx);
 
-
-
-        if(!data || !data.description){
-            ctx.throw(400, "Please write a description")
+        if(!data) {
+            ctx.throw(400, "Must attach something to the document.")
         }
 
-        if(!files || !files.image){
+        if(!files || !Object.keys(files).length) {
             ctx.throw(400, "Please upload an Image")
         }
+        debugger;
+        // TODO:  The user here needs to be from a query.
+        const user = await strapi
+          .query('user', 'users-permissions')
+          .findOne({ id: data.user });
+        data.user = user;
+        // data.uploads = files;
+        // const { user } = ctx.state
 
-        const { user } = ctx.state
-
-        entity = await strapi.services.docs.create(...data, { files })
+        entity = await strapi.services.docs.create({ ...data }, { files }).catch(err => {
+          debugger;
+          throw err;
+        })
     } else {
         ctx.throw(400, "Please use multipart/form-data");
     }
@@ -34,20 +41,23 @@ module.exports = {
     return sanitizeEntity(entity, { model: strapi.models.docs })
 },
 
-async update(ctx){
-    const {id} = ctx.params
-    const {user} = ctx.state
+async update (ctx) {
+  debugger;
+    const {id} = ctx.params;
+    const { data, files } = parseMultipartData(ctx);
+    debugger;
+    const user = await strapi
+          .query('user', 'users-permissions')
+          .findOne({ id: data.user });
+          debugger;
+    data.user = user;
+    // data.uploads = files;
+    let entity;
 
-    let entity
-    if (ctx.is('multipart')){
-        ctx.throw(400, "Please only make JSON request with an updated description")
-    } else {
-        delete ctx.request.body.likes
+    entity = await strapi.services.docs.update({ id }, {...data}, {files});
 
-        entity = await strapi.services.post.update({id, author: user.id}, ctx.request.body)
-    }
 
-    return sanitizeEntity(entity, {model: strapi.models.post})
+    return sanitizeEntity(entity, {model: strapi.models.docs})
 },
 
 async delete(ctx){
